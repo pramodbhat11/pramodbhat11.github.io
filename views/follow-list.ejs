@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - WasteToWealth
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="javascript:history.back()"><i class="fas fa-arrow-left"></i> Back</a>
+            <span class="navbar-brand mb-0 h1 mx-auto">
+                <%= title %>
+            </span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="list-group shadow-sm">
+                    <% if (list.length===0) { %>
+                        <div class="list-group-item text-center p-5 text-muted">
+                            <p>No users found in this list.</p>
+                        </div>
+                        <% } %>
+
+                            <% list.forEach(item=> {
+                                // Determine which user object to show based on type
+                                const user = type === 'followers' ? item.followerId : item.followingId;
+                                const role = type === 'followers' ? item.followerModel : item.followingModel;
+                                %>
+                                <% if (user) { %>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center me-3"
+                                                style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                                <%= (user.name || user.companyName || 'U' )[0].toUpperCase() %>
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-0">
+                                                    <a href="/profile/<%= user._id %>?type=<%= role %>"
+                                                        class="text-decoration-none text-dark stretched-link">
+                                                        <%= user.name || user.companyName %>
+                                                    </a>
+                                                </h5>
+                                                <small class="text-muted">
+                                                    <%= role==='FarmerLogin' ? 'Farmer' : 'Company' %>
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

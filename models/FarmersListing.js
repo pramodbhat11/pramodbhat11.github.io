@@ -18,6 +18,11 @@ const FarmersListingSchema = new Schema({
     required: true
   },
 
+  price: {
+    type: Number,
+    required: true
+  },
+
   location: {
     type: String,
     required: true
@@ -28,7 +33,12 @@ const FarmersListingSchema = new Schema({
     required: true
   },
   image: {
-    type: String,   
+    type: String,
+    required: true
+  },
+  email:
+  {
+    type: String,
     required: true
   },
   createdAt: {

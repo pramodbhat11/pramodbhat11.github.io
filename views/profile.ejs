@@ -1,0 +1,152 @@
+<% layout('layouts/boilerplate') -%>
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-3px);
+            background: #e9ecef;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+    <!-- Assuming use of existing layouts, but fallback to direct generic structure if not available in project -->
+
+    <!-- Navbar (Simplified) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-0">
+        <div class="container">
+            <a class="navbar-brand" href="/">WasteToWealth</a>
+            <div class="ms-auto">
+                <a href="/dashboard" class="btn btn-outline-light btn-sm">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-header text-center">
+        <div class="container">
+            <% if ((profile.name && profile.name[0]) || (profile.companyName && profile.companyName[0])) { %>
+                <div class="display-1 fw-bold mb-3">
+                    <%= (profile.name || profile.companyName)[0].toUpperCase() %>
+                </div>
+                <% } %>
+                    <h1 class="fw-bold">
+                        <%= profile.name || profile.companyName %>
+                    </h1>
+                    <p class="lead">
+                        <%= userType==='FarmerLogin' ? 'Farmer' : 'Company' %> | <%= profile.village ||
+                                profile.location.district || 'Location N/A' %>
+                    </p>
+
+                    <div class="mt-4">
+                        <% if (!currentUser) { %>
+                            <a href="/login" class="btn btn-light px-4 rounded-pill">Login to Follow</a>
+                            <% } else if (currentUser._id.toString()===profile._id.toString()) { %>
+                                <button class="btn btn-secondary px-4 rounded-pill" disabled>It's You</button>
+                                <a href="/logout" class="btn btn-outline-light px-4 rounded-pill ms-2">Logout</a>
+                                <% } else { %>
+                                    <button id="followBtn"
+                                        class="btn <%= isFollowing ? 'btn-outline-light' : 'btn-light' %> px-4 rounded-pill fw-bold"
+                                        onclick="toggleFollow()">
+                                        <%= isFollowing ? 'Unfollow' : 'Follow' %>
+                                    </button>
+
+
+                                    <% } %>
+                    </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <!-- Stats Row -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-4 col-md-3">
+                <div class="stat-box" onclick="location.href='/profile/<%= profile._id %>/followers'">
+                    <div class="stat-number" id="followersCount">
+                        <%= followersCount %>
+                    </div>
+                    <div class="stat-label">Followers</div>
+                </div>
+            </div>
+            <div class="col-4 col-md-3">
+                <div class="stat-box" onclick="location.href='/profile/<%= profile._id %>/following'">
+                    <div class="stat-number">
+                        <%= followingCount %>
+                    </div>
+                    <div class="stat-label">Following</div>
+                </div>
+            </div>
+            <div class="col-4 col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number">
+                        <%= listings.length %>
+                    </div>
+                    <div class="stat-label">Listings</div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        async function toggleFollow() {
+            const isFollowing = document.getElementById('followBtn').innerText === 'Unfollow';
+            const endpoint = isFollowing ? '/unfollow/<%= profile._id %>' : '/follow/<%= profile._id %>';
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ targetModel: '<%= userType %>' })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update UI
+                    const btn = document.getElementById('followBtn');
+                    const countEl = document.getElementById('followersCount');
+                    let count = parseInt(countEl.innerText);
+
+                    if (isFollowing) {
+                        btn.innerText = 'Follow';
+                        btn.classList.remove('btn-outline-light');
+                        btn.classList.add('btn-light');
+                        countEl.innerText = count - 1;
+                    } else {
+                        btn.innerText = 'Unfollow';
+                        btn.classList.remove('btn-light');
+                        btn.classList.add('btn-outline-light');
+                        countEl.innerText = count + 1;
+                    }
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Action failed');
+            }
+        }
+    </script>

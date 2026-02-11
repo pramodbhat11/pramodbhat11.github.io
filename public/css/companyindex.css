@@ -1,25 +1,25 @@
-/* Reset & Typography */
+/* ================= RESET ================= */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
 }
 
 body {
-    background-color: #f5f6fa;
-    color: #333;
+    background: #f9fafb;
+    color: #1f2937;
+    line-height: 1.6;
 }
 
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
+    background: #14532d;
+    padding: 15px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    background-color: #1E88E5;
     color: #fff;
-    flex-wrap: wrap;
 }
 
 .navbar .logo {
@@ -27,120 +27,114 @@ body {
     font-weight: bold;
 }
 
-.navbar .nav-buttons a,
-.navbar .nav-buttons span {
+.nav-buttons a,
+.nav-buttons .welcome {
     margin-left: 15px;
-    font-size: 16px;
     text-decoration: none;
     color: #fff;
+    font-size: 14px;
 }
 
-.navbar .nav-buttons a.btn {
-    padding: 8px 15px;
-    border-radius: 6px;
-    background-color: #4CAF50;
+.nav-buttons a.btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
     transition: 0.3s;
 }
 
-.navbar .nav-buttons a.btn:hover {
-    background-color: #45A049;
+.nav-buttons a.btn:hover {
+    opacity: 0.85;
 }
 
-.navbar .nav-buttons span.welcome {
-    margin-right: 10px;
-}
-
-/* Page Title */
+/* ================= PAGE TITLE ================= */
 .title {
     text-align: center;
     font-size: 32px;
-    margin: 25px 0 10px 0;
-    color: #1E88E5;
+    margin: 30px 0 20px;
+    color: #14532d;
 }
 
 .success {
     text-align: center;
-    color: green;
-    margin-bottom: 15px;
+    color: #22c55e;
+    margin-bottom: 20px;
 }
 
-/* Create New Listing Button */
-.nav-buttons h2 a.btn {
-    display: inline-block;
-    margin: 15px auto;
-    padding: 10px 20px;
-    background-color: #FF9800;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.nav-buttons h2 a.btn:hover {
-    background-color: #F57C00;
-}
-
-/* Listing Container */
+/* ================= LISTING CONTAINER ================= */
 .listing-container {
+    max-width: 1200px;
+    margin: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    padding: 20px 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 0 20px 50px 20px;
 }
 
-/* Listing Card */
+/* ================= LISTING CARD ================= */
 .listing-card {
-    background-color: #fff;
-    border-radius: 12px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     padding: 20px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .listing-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
-.listing-card h2 {
-    font-size: 22px;
-    margin-bottom: 8px;
-    color: #1E88E5;
+.listing-card .listing-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #14532d;
 }
 
 .listing-card p {
-    font-size: 16px;
+    font-size: 14px;
     margin: 6px 0;
+    color: #374151;
 }
 
-.listing-card p strong {
-    color: #333;
-}
-
-/* View Button */
-.listing-card a.view-btn {
+/* ================= BUTTON ================= */
+.view-btn {
     display: inline-block;
     margin-top: 12px;
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #22c55e;
+    color: #fff;
     text-decoration: none;
-    border-radius: 6px;
+    font-weight: 500;
     transition: 0.3s;
 }
 
-.listing-card a.view-btn:hover {
-    background-color: #45A049;
+.view-btn:hover {
+    background: #16a34a;
 }
 
-/* Responsive */
-@media (max-width: 500px) {
+/* ================= EMPTY STATE ================= */
+.empty {
+    text-align: center;
+    font-size: 18px;
+    color: #6b7280;
+    padding: 40px 0;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 700px) {
     .navbar {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 10px;
     }
-    .navbar .nav-buttons {
-        margin-top: 10px;
+
+    .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .listing-container {
+        grid-template-columns: 1fr;
     }
 }

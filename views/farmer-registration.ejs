@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Registration</title>
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>Farmer Registration</h2>
+
+        <% if (error) { %>
+            <div class="alert alert-error">
+                <%= error %>
+            </div>
+            <% } %>
+                <% if (success) { %>
+                    <div class="alert alert-success">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <form action="/farmer/register" method="POST">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Full Name" required>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="mobileNumber">Mobile Number</label>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Mobile Number"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Email Address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Create Password</label>
+                                <input type="password" id="password" name="password" placeholder="Create Password"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword"
+                                    placeholder="Confirm Password" required>
+                            </div>
+
+                            <button type="submit">Register</button>
+                        </form>
+
+                        <div style="text-align: center; margin: 15px 0;">
+                            <p>Or</p>
+                            <a href="/auth/google/farmer/register" style="text-decoration: none;">
+                                <img src="/images/google_signin.png" alt="Sign up with Google"
+                                    style="height: 40px; cursor: pointer;">
+                            </a>
+                        </div>
+
+                        <p>Already have an account? <a href="/farmer/login">Login</a></p>
+    </div>
+</body>
+
+</html>

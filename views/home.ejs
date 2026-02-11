@@ -1,123 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WasteToWealth - Home</title>
 
-    <link rel="stylesheet" href="/css/home.css">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WasteToWealth | Home</title>
+
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
+    <!-- ================= HEADER / NAVBAR ================= -->
     <header class="navbar">
-        <h2 class="logo">WasteToWealth</h2>
+        <div class="nav-container">
 
-        <div class="nav-buttons">
-            <% if (!currentUser) { %>
-                <a href="/login" class="btn">Login</a>
-                <a href="/register" class="btn">Register</a>
-            <% } else { %>
-                <span class="welcome">Welcome, <%= currentUser.email %></span>
-                <a href="/logout" class="btn">Logout</a>
-            <% } %>
+            <!-- Logo -->
+            <h2 class="logo">🌱 WasteToWealth</h2>
+
+            <!-- Auth Actions -->
+            <nav class="nav-actions">
+                <a href="/crop-info" class="btn btn-outline"
+                    style="border-color: #27ae60; color: #27ae60; margin-right: 10px;">
+                    <i class="fas fa-robot"></i> Crop AI
+                </a>
+                <% if (!currentUser) { %>
+                    <a href="/login" class="btn btn-outline">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                    <% } else { %>
+                        <span class="welcome">Welcome, <%= currentUser.email %></span>
+
+                        <a href="/logout" class="btn btn-danger">Logout</a>
+                        <% } %>
+            </nav>
+
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <img src="https://static.theprint.in/wp-content/uploads/2019/02/FARMERS-IN-INDIA-1024x576.jpg" class="hero-img">
+    <!-- ================= HERO ================= -->
+    <section class="hero hero-bg">
 
-        <div class="hero-text">
-            <h1>Turning Waste Into Opportunity</h1>
-            <p>Connecting Farmers & Industries for a Sustainable Future</p>
+        <!-- Overlay -->
+        <div class="hero-overlay"></div>
 
-            <div class="hero-buttons">
-                <a href="/farmer/listings" class="hero-btn">Farmers Waste Listings</a>
-                <a href="/company/listings" class="hero-btn">Company Waste Listings</a>
-            </div>
-        </div>
-    </section>
+        <div class="hero-container">
 
-    <!-- ABOUT SECTION -->
-    <section class="about-section">
-        <h2>How WasteToWealth Helps</h2>
+            <!-- Hero Content -->
+            <div class="hero-text">
 
-        <div class="about-container">
+                <span class="hero-badge">
+                    🌱 Sustainable • Profitable • Green
+                </span>
 
-            <div class="about-card">
-                <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6">
-">
-                <h3>Farmers Earn More</h3>
-                <p>Farmers sell leftover crops, scrap and plastics to industries and generate extra income.</p>
-            </div>
+                <h1>
+                    Turning <span>Waste</span> Into <span>Wealth</span>
+                </h1>
 
-            <div class="about-card">
-                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800">
-                <h3>Industries Get Raw Material</h3>
-                <p>Industries get low-cost waste materials directly from farmers, reducing procurement cost.</p>
-            </div>
+                <p>
+                    Connecting farmers and industries to convert waste into income
+                    while building a cleaner and greener future.
+                </p>
 
-            <div class="about-card">
-                <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=800">
-                <h3>Environment Benefits</h3>
-                <p>Less pollution and more recycling — making waste management easier and cleaner.</p>
-            </div>
+                <div class="hero-buttons">
+                    <a href="/farmer/listings" class="btn btn-primary">
+                        <i class="fas fa-seedling"></i> Farmer Listings
+                    </a>
 
-        </div>
-    </section>
-
-    <!-- SUCCESS STORIES -->
- <section class="success-section">
-    <h2>Success Stories</h2>
-
-    <div class="success-container">
-
-        <div class="success-card">
-            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=800">
-            <p>“I used to burn crop waste. Now industries buy it monthly. WasteToWealth changed everything.”</p>
-            <h4>- Ramesh, Farmer</h4>
-        </div>
-
-        <div class="success-card">
-            <img src="https://images.assettype.com/swarajya/2018-03/afc57194-54b7-4b88-bac9-6d9658bbc462/a45d7542-4aef-4b69-8d19-3ae5856d8285.jpg?w=1280&q=100&fmt=pjpeg&auto=format">
-            <p>“We get 40% cheaper recyclable plastic directly from farmers. A game changer!”</p>
-            <h4>- Modern Polymers Industry</h4>
-        </div>
-
-    </div>
-</section>
-
-
-    <!-- OPTIONS SECTION -->
-    <section class="options-section">
-        <h2>Explore</h2>
-
-        <div class="options-container">
-
-            <div class="option-card">
-                <h3>Farmers Waste Listings</h3>
-                <p>See waste provided by farmers: crops waste, scrap, plastics, etc.</p>
-                <a href="/farmer/listings" class="view-btn">View Listings</a>
-            </div>
-
-            <div class="option-card">
-                <h3>Company Waste Listings</h3>
-                <p>Industries posting the waste they need or want to buy.</p>
-                <a href="/company/listings" class="view-btn">View Listings</a>
-            </div>
-
-            <% if (currentUser) { %>
-                <div class="option-card">
-                    <h3>Create New Listing</h3>
-                    <p>Add your waste listing to connect with buyers.</p>
-                    <a href="/newlisting" class="view-btn">Create Listing</a>
+                    <a href="/companies" class="btn btn-outline">
+                        <i class="fas fa-industry"></i> Company Listings
+                    </a>
                 </div>
-            <% } %>
+
+            </div>
 
         </div>
     </section>
+
+    <!-- ================= STATS SECTION ================= -->
+    <% if (typeof totalCompanies !=='undefined' && typeof totalFarmers !=='undefined' ) { %>
+        <section class="section">
+            <h2 class="section-title">Platform Impact</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>
+                        <%= totalFarmers %>
+                    </h3>
+                    <p>Farmers Connected</p>
+                </div>
+
+                <div class="card">
+                    <h3>
+                        <%= totalCompanies %>
+                    </h3>
+                    <p>Companies Registered</p>
+                </div>
+
+                <div class="card">
+                    <h3>0+</h3>
+                    <p>Tons of Waste Processed</p>
+                </div>
+            </div>
+        </section>
+        <% } %>
+
+            <!-- ================= FEATURED REQUIREMENTS ================= -->
+            <% if (typeof recentRequirements !=='undefined' && recentRequirements.length> 0) { %>
+                <section class="section bg-light">
+                    <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                        <h2 class="section-title">Latest Industry Requirements</h2>
+                        <div class="card-grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                            <% recentRequirements.forEach(listing=> { %>
+                                <div class="card listing-card"
+                                    style="text-align: left; padding: 1.5rem; transition: transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                        <span class="badge"
+                                            style="background-color: #e2e8f0; color: #4a5568; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
+                                            <%= listing.industryType || 'Industry' %>
+                                        </span>
+                                        <% if(listing.offeredPrice) { %>
+                                            <span style="color: #27ae60; font-weight: bold;">₹<%= listing.offeredPrice
+                                                    %>/kg</span>
+                                            <% } %>
+                                    </div>
+
+                                    <h4 style="color: #2d3748; margin-bottom: 0.5rem;">
+                                        <%= listing.wastetypeRequired %>
+                                    </h4>
+                                    <p class="text-muted" style="margin-bottom: 1rem; color: #718096;">
+                                        <%= listing.companyName %>
+                                    </p>
+
+                                    <div style="margin-bottom: 1rem;">
+                                        <p style="margin: 0.25rem 0;"><strong>Quantity:</strong>
+                                            <%= listing.requiredQuantity %> kg
+                                        </p>
+                                        <p style="margin: 0.25rem 0;"><i class="fas fa-map-marker-alt"
+                                                style="color: #e53e3e; width: 20px;"></i>
+                                            <%= listing.location %>
+                                        </p>
+                                    </div>
+
+                                    <a href="/companies/<%= listing._id %>" class="btn btn-primary btn-sm"
+                                        style="display:block; text-align:center; background-color: #27ae60; border: none; padding: 0.5rem;">View
+                                        Details</a>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <a href="/companies" class="btn btn-outline"
+                                style="border: 2px solid #27ae60; color: #27ae60;">View All Requirements</a>
+                        </div>
+                    </div>
+                </section>
+                <% } %>
+
+                    <!-- ================= ABOUT ================= -->
+                    <section class="section">
+                        <h2 class="section-title">Why WasteToWealth?</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=800" alt="">
+                                <h3>Extra Income for Farmers</h3>
+                                <p>Farmers earn by selling crop residue instead of burning it.</p>
+                            </div>
+
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800" alt="">
+                                <h3>Low-cost Raw Materials</h3>
+                                <p>Industries get recyclable materials directly from farmers.</p>
+                            </div>
+
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800" alt="">
+                                <h3>Cleaner Environment</h3>
+                                <p>Reduced pollution and better waste management.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ================= SUCCESS STORIES ================= -->
+                    <section class="section section-light">
+                        <h2 class="section-title">Success Stories</h2>
+
+                        <div class="card-grid">
+                            <div class="card testimonial">
+                                <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800" alt="">
+                                <p>“WasteToWealth helped me earn monthly from crop waste.”</p>
+                                <h4>- Ramesh, Farmer</h4>
+                            </div>
+
+                            <div class="card testimonial">
+                                <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?w=800" alt="">
+                                <p>“Raw material cost dropped by 40% for our industry.”</p>
+                                <h4>- GreenPlast Industries</h4>
+                            </div>
+
+                            <div class="card testimonial">
+                                <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=800" alt="">
+                                <p>“We converted agricultural waste into eco-friendly packaging.”</p>
+                                <h4>- Ananya, Startup Founder</h4>
+                            </div>
+
+                            <div class="card testimonial">
+                                <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=800" alt="">
+                                <p>“Our village reduced waste dumping and created new jobs.”</p>
+                                <h4>- Suresh, Village Head</h4>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- ================= EXPLORE ================= -->
+                    <section class="section">
+                        <h2 class="section-title">Explore Platform</h2>
+
+                        <div class="card-grid">
+                            <div class="card">
+                                <h3>Farmer Waste</h3>
+                                <p>Crop waste, plastic scrap & residue.</p>
+                                <a href="/farmer/listings" class="btn btn-primary">View</a>
+                            </div>
+
+                            <div class="card">
+                                <h3>Industry Requirements</h3>
+                                <p>Industries searching for recyclable materials.</p>
+                                <a href="/company/listings" class="btn btn-primary">View</a>
+                            </div>
+
+                            <% if (currentUser) { %>
+                                <div class="card highlight">
+                                    <h3>Create Listing</h3>
+                                    <p>Add waste or requirements instantly.</p>
+                                    <% if (currentUser && currentUser.constructor.modelName==="FarmerLogin" ) { %>
+                                        <a href="/farmers/new" class="btn btn-primary">Add Waste</a>
+                                        <% } else if (currentUser && currentUser.constructor.modelName==="CompanyLogin"
+                                            ) { %>
+                                            <a href="/companies/new" class="btn btn-primary">Add Requirement</a>
+                                            <% } else { %>
+                                                <a href="/login" class="btn btn-primary">Create</a>
+                                                <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                    </section>
+
+                    <!-- ================= FOOTER ================= -->
+                    <footer class="site-footer">
+                        <div class="footer-container">
+
+                            <div class="footer-section">
+                                <h3>About Us</h3>
+                                <p>
+                                    WasteToWealth transforms waste into valuable resources,
+                                    empowering communities through sustainability and income generation.
+                                </p>
+                            </div>
+
+                            <div class="footer-section">
+                                <h3>Quick Links</h3>
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/farmer/listings">Farmer Listings</a></li>
+                                    <li><a href="/company/listings">Company Listings</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="footer-section">
+                                <h3>Contact</h3>
+                                <p>Email: wastetowealth@gmail.com</p>
+                                <p>Location: India</p>
+                            </div>
+
+                            <div class="footer-section">
+                                <h3>Follow Us</h3>
+                                <div class="social-links">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://www.instagram.com/waste_to_wealth_/"><i
+                                            class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="footer-bottom">
+                            <p>© 2026 WasteToWealth. All Rights Reserved.</p>
+                        </div>
+                    </footer>
 
 </body>
+
 </html>

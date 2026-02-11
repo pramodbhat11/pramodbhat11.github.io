@@ -1,74 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farmers Waste Listings</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .listing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
 
-    <link rel="stylesheet" href="/css/listings.css">
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .listing-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .price-tag {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #198754;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
 
-<body>
- 
-   
+<body class="bg-light">
 
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">WasteToWealth</a>
 
-    <!-- NAVBAR -->
-<header class="navbar">
-    <h2 class="logo">WasteToWealth</h2>
+            <!-- Amazon-style Search Bar -->
+            <form class="d-flex mx-auto flex-grow-1 px-4" style="max-width: 600px;" action="/farmers" method="GET">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="search" placeholder="Search for waste type..."
+                        aria-label="Search" value="<%= typeof search !== 'undefined' ? search : '' %>">
+                    <button class="btn btn-warning" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link text-white" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="/crop-info"><i class="fas fa-robot"></i>
+                            Crop AI</a></li>
 
-    <div class="nav-buttons">
-
-        <% if (!currentUser) { %>
-            <!-- User NOT logged in -->
-            <a href="/login" class="btn">Login</a>
-            <a href="/register" class="btn">Register</a>
-        <% } else { %>
-            <!-- User logged in -->
-            <span class="welcome">Welcome, <%= currentUser.email %></span>
-            <a href="/logout" class="btn">Logout</a>
-        <% } %>
-
-    </div>
-</header>
-
-
-
-    <h1 class="title">Farmers Waste Listings</h1>
-
-    <h3 class="success"><%=success%></h3> 
-
- <h2 class="nav-buttons">
- <a href="/farmer/newlisting" class="btn">create new listing</a>
-</h2>
-
-
-    <div class="listing-container">
-
-        <% allistings.forEach(listing => { %>
-
-            <div class="listing-card">
-
-                <img src="<%= listing.image %>" 
-                     alt="<%= listing.wastetype %>" 
-                     class="listing-img">
-
-                <p><strong>Name:</strong> <%= listing.farmerName %></p>
-
-                <h2><%= listing.wastetype %></h2>
-
-                <p><strong>Quantity:</strong> <%= listing.quantity %> kg</p>
-                <p><strong>Location:</strong> <%= listing.location %></p>
-
-                <p><strong>Contact:</strong> <%= listing.contactPhone %></p>
-
-                <a href="/farmer/<%= listing._id %>" class="view-btn">View</a>
-
+                    <% if (!currentUser) { %>
+                        <li class="nav-item"><a class="nav-link text-white" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="btn btn-light ms-2" href="/register">Register</a></li>
+                        <% } else { %>
+                            <li class="nav-item"><span class="nav-link text-white">Welcome, <%= currentUser.name ||
+                                        currentUser.email %></span></li>
+                            <li class="nav-item"><a class="btn btn-danger btn-sm ms-2" href="/logout">Logout</a>
+                            </li>
+                            <% } %>
+                </ul>
             </div>
+        </div>
+    </header>
 
-        <% }) %>
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container">
 
-    </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2">Available Waste Listings</h1>
+            <% if (currentUser && currentUser.constructor && currentUser.constructor.modelName==="FarmerLogin" ) { %>
+                <a href="/farmers/new" class="btn btn-success">
+                    <i class="fas fa-plus-circle me-1"></i> Create New Listing
+                </a>
+                <% } %>
+        </div>
+
+        <% if (success && success.length> 0) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= success %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+                <!-- ================= LISTINGS ================= -->
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+                    <% if (allListings.length===0) { %>
+                        <div class="col-12 text-center py-5">
+                            <div class="text-muted">
+                                <i class="fas fa-box-open fa-3x mb-3"></i>
+                                <p class="lead">
+                                    <% if (typeof search !=='undefined' && search) { %>
+                                        No waste listings found matching "<%= search %>".
+                                            <% } else { %>
+                                                No waste listings available at the moment.
+                                                <% } %>
+                                </p>
+                            </div>
+                        </div>
+                        <% } %>
+
+                            <% allListings.forEach(listing=> { %>
+                                <div class="col">
+                                    <div class="card h-100 shadow-sm listing-card border-0">
+                                        <div class="position-relative">
+                                            <img src="<%= listing.image || '/images/default-waste.jpg' %>"
+                                                alt="<%= listing.wastetype || 'Waste Image' %>"
+                                                class="card-img-top listing-img">
+                                            <span class="position-absolute top-0 end-0 badge bg-success m-2">
+                                                <%= listing.quantity %> kg
+                                            </span>
+                                        </div>
+
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="card-title text-capitalize mb-0">
+                                                    <%= listing.wastetype %>
+                                                </h5>
+                                                <span class="price-tag">₹<%= listing.price || 0 %>/kg</span>
+                                            </div>
+
+                                            <p class="card-text text-muted small mb-2">
+                                                <i class="fas fa-map-marker-alt text-danger me-1"></i>
+                                                <%= listing.location %>
+                                            </p>
+
+                                            <p class="card-text text-muted small mb-3">
+                                                <i class="fas fa-user text-primary me-1"></i>
+                                                <%= listing.farmerName %>
+                                            </p>
+
+                                            <div
+                                                class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                                                <div class="text-dark fw-bold">
+                                                    Total: ₹<%= (listing.price || 0) * listing.quantity %>
+                                                </div>
+                                                <a href="/farmers/<%= listing._id %>"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    View Details
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+
+                </div>
+
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

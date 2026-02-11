@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Company Login</h2>
+
+        <% if (error) { %>
+            <div class="alert alert-error">
+                <%= error %>
+            </div>
+            <% } %>
+                <% if (success) { %>
+                    <div class="alert alert-success">
+                        <%= success %>
+                    </div>
+                    <% } %>
+
+                        <form action="/company/login1" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+
+                            <button type="submit" class="btn primary">Login</button>
+                        </form>
+
+                        <div style="text-align: center; margin: 15px 0;">
+                            <p>Or</p>
+                            <a href="/auth/google/company/login" style="text-decoration: none;">
+                                <img src="/images/google_signin.png" alt="Sign in with Google"
+                                    style="height: 40px; cursor: pointer;">
+                            </a>
+                        </div>
+    </div>
+
+    <p>Don't have an account? <a href="/company/register">Register as Company</a></p>
+    <p><a href="/login">Back to User Type Selection</a></p>
+    </div>
+</body>
+
+</html>

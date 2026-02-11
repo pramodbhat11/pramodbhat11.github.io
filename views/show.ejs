@@ -1,46 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= listing.wastetype %> - Details</title>
-
+    <title>
+        <%= listing.farmerName %> - Waste Listing
+    </title>
     <link rel="stylesheet" href="/css/show.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .badge {
+            font-size: 0.75em;
+        }
+    </style>
 </head>
+
 <body>
 
-<header class="navbar">
-    <a href="/" class="back-btn">⬅ Back</a>
-    <h2 class="title">Listing Details</h2>
-</header>
+    <header class="navbar bg-primary text-white py-3">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="logo mb-0">WasteToWealth</h2>
+                <nav class="nav-buttons">
 
-<div class="container">
-
-    <div class="card">
-
-        <img src="<%= listing.image %>" alt="<%= listing.wastetype %>" class="listing-img" >
-
-        <h2><%= listing.wastetype %></h2>
-
-        <p><strong>Quantity:</strong> <%= listing.quantity %> kg</p>
-        <p><strong>Location:</strong> <%= listing.location %></p>
-
-        <div class="button-group">
-
-            <a href="/farmer/<%= listing._id %>/edit" class="edit-btn">Edit</a><br><br>
-            <!-- DELETE BUTTON -->
-            <form action="/farmer/<%= listing._id %>?_method=DELETE" method="POST">
-                <button type="submit" class="delete-btn">Delete</button>
-            </form>
-            
-
-             
-
+                    <a href="/farmers" class="btn btn-light">Back to Listings</a>
+                </nav>
+            </div>
         </div>
+    </header>
 
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h1 class="mb-0">Waste Listing Details</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>Farm Owner:</strong>
+                                    <p>
+                                        <%= listing.farmerName %>
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Waste Type:</strong>
+                                    <p>
+                                        <%= listing.wastetype %>
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Quantity:</strong>
+                                    <p>
+                                        <%= listing.quantity %> kg
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Price:</strong>
+                                    <p>₹<%= listing.price %> per kg</p>
+                                    <p class="text-success fw-bold">Total: ₹<%= listing.price * listing.quantity %>
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Location:</strong>
+                                    <p>
+                                        <%= listing.location %>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>Contact Phone:</strong>
+                                    <p>
+                                        <%= listing.contactPhone %>
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <strong>Email:</strong>
+                                    <p>
+                                        <%= listing.email %>
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <img src="<%= listing.image %>" alt="<%= listing.wastetype %>"
+                                        class="img-fluid rounded" style="max-height: 200px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-4">
+                            <% if(currentUser && currentUser.email===listing.email) { %>
+                                <a href="/farmers/<%= listing._id %>/edit" class="btn btn-warning me-2">Edit</a>
+                                <form action="/farmers/<%= listing._id %>?_method=DELETE" method="POST"
+                                    class="d-inline">
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this listing?')">Delete</button>
+                                </form>
+                                <% } %>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Similar Listings Section -->
+                <% if(similarListings && similarListings.length> 0) { %>
+                    <div class="card mt-4 shadow">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="mb-0">Similar Farmer Listings</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <% similarListings.forEach(listing=> { %>
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="<%= listing.image %>" class="card-img-top"
+                                                alt="<%= listing.wastetype %>"
+                                                style="height: 150px; object-fit: cover;">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= listing.farmerName %>
+                                                </h5>
+                                                <p class="card-text"><strong>Type:</strong>
+                                                    <%= listing.wastetype %>
+                                                </p>
+                                                <p class="card-text"><strong>Qty:</strong>
+                                                    <%= listing.quantity %> kg
+                                                </p>
+                                                <p class="card-text"><strong>Loc:</strong>
+                                                    <%= listing.location %>
+                                                </p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <a href="/farmers/<%= listing._id %>"
+                                                    class="btn btn-primary btn-sm w-100">View Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+
+                        <!-- Matching Company Listings Section -->
+                        <% if(matchingCompanies && matchingCompanies.length> 0) { %>
+                            <div class="card mt-4 shadow">
+                                <div class="card-header bg-danger text-white">
+                                    <h3 class="mb-0">Matching Company Requirements</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <% matchingCompanies.forEach(company=> { %>
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <%= company.companyName %>
+                                                        </h5>
+                                                        <p class="card-text"><strong>Type Needed:</strong>
+                                                            <%= company.wastetypeRequired %>
+                                                        </p>
+                                                        <p class="card-text"><strong>Req Qty:</strong>
+                                                            <%= company.requiredQuantity %> kg
+                                                                <% if(company.requiredQuantity <=listing.quantity) { %>
+                                                                    <span class="badge bg-success">Match</span>
+                                                                    <% } else { %>
+                                                                        <span class="badge bg-info">Partial</span>
+                                                                        <% } %>
+                                                        </p>
+                                                        <p class="card-text"><strong>Loc:</strong>
+                                                            <%= company.location %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <a href="/companies/<%= company._id %>"
+                                                            class="btn btn-primary btn-sm w-100">View Details</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% if(matchingCompanies && matchingCompanies.length===0) { %>
+                                    <div class="card mt-4 shadow">
+                                        <div class="card-header bg-secondary text-white">
+                                            <h3 class="mb-0">No Matching Company Requirements Found</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-0">There are currently no companies looking for <%=
+                                                    listing.wastetype %>. Consider expanding your marketing reach or
+                                                    adjusting your listing.</p>
+                                        </div>
+                                    </div>
+                                    <% } %>
+            </div>
+        </div>
     </div>
 
-</div>
 
 </body>
+
 </html>

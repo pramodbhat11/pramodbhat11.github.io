@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Status - WasteToWealth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <a href="/dashboard" class="btn btn-outline-primary mb-4">&larr; Back to Dashboard</a>
+
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Order Status: <%= order.status.replace('_', ' ' ) %>
+                </h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Order Timeline</h5>
+                <ul class="list-group list-group-flush">
+                    <% order.timeline.forEach(event=> { %>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <strong>
+                                    <%= event.status.replace('_', ' ' ) %>
+                                </strong>
+                                <span class="text-muted">
+                                    <%= new Date(event.timestamp).toLocaleString() %>
+                                </span>
+                            </div>
+                            <p class="mb-0 small">
+                                <%= event.note %>
+                            </p>
+                        </li>
+                        <% }) %>
+                </ul>
+
+                <% if (order.status !=='COMPLETED' ) { %>
+                    <div class="mt-4 pt-3 border-top">
+                        <h5>Update Status</h5>
+                        <div class="btn-group">
+                            <% if (order.status==='ACCEPTED' ) { %>
+                                <button onclick="updateOrder('<%= order._id %>', 'PICKUP_SCHEDULED')"
+                                    class="btn btn-info text-white">
+                                    Schedule Pickup
+                                </button>
+                                <% } else if (order.status==='PICKUP_SCHEDULED' ) { %>
+                                    <button onclick="updateOrder('<%= order._id %>', 'COMPLETED')"
+                                        class="btn btn-success">
+                                        Mark Completed
+                                    </button>
+                                    <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function updateOrder(orderId, status) {
+            if (!confirm('Update order status to ' + status + '?')) return;
+            const note = prompt("Add a note (optional):") || "Status updated.";
+
+            const res = await fetch(`/order/${orderId}/update`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status, note })
+            });
+
+            if (res.ok) location.reload();
+        }
+    </script>
+</body>
+
+</html>

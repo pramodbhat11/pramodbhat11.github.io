@@ -5,6 +5,52 @@ body {
     padding: 0;
 }
 
+/* Alert messages - Override Bootstrap styles if needed */
+.alert {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.alert-danger {
+    background: #fee;
+    color: #c33;
+    border: 1px solid #fcc;
+}
+
+.alert-success {
+    background: #efe;
+    color: #363;
+    border: 1px solid #cfc;
+}
+
+/* Override Bootstrap primary button if needed */
+.btn-primary {
+    background-color: #0a5cf5 !important;
+    border-color: #0a5cf5 !important;
+}
+
+.btn-primary:hover {
+    background-color: #0846c3 !important;
+    border-color: #0846c3 !important;
+}
+
+/* Override Bootstrap light button if needed */
+.btn-light {
+    background-color: white !important;
+    color: #0a5cf5 !important;
+}
+
+.btn-light:hover {
+    background-color: #e3e3e3 !important;
+}
+
+/* Card shadow override if needed */
+.card {
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15) !important;
+}
+
 /* Navbar */
 .navbar {
     display: flex;

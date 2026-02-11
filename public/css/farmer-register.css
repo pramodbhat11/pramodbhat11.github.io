@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Background */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e8f8f0, #d4f1e3);
+}
+
+/* Center wrapper */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form card */
+.form {
+    background: #ffffff;
+    width: 380px;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    animation: fadeInUp 0.4s ease;
+}
+
+/* Title */
+.form h2 {
+    text-align: center;
+    margin-bottom: 6px;
+    color: #2d3436;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 22px;
+}
+
+/* Input groups */
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #34495e;
+}
+
+/* Inputs */
+.form input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.form input::placeholder {
+    color: #95a5a6;
+}
+
+.form input:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.25);
+}
+
+/* Button */
+.form button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.form button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(46, 204, 113, 0.35);
+}
+
+/* Login link */
+.login-link {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #27ae60;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

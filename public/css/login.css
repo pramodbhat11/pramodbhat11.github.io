@@ -63,3 +63,21 @@
         .login-container a:hover {
             text-decoration: underline;
         }
+
+        .flash-error {
+    background: #ffdddd;
+    color: #b30000;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.flash-success {
+    background: #ddffdd;
+    color: #006600;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+}

@@ -1,55 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit <%= listing.wastetype %> - Listing</title>
+    <title>Edit Company Listing</title>
     <link rel="stylesheet" href="/css/edit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-<header class="navbar">
-    <a href="/listing/<%= listing._id %>" class="back-btn">⬅ Back</a>
-    <h2 class="title">Edit Listing</h2>
-</header>
-
-<div class="container">
-    <div class="card">
-        <form action="/companylisting/<%= listing._id %>?_method=PUT" method="POST">
-            
-            <label for="companyName">Company Name:</label>
-            <input type="text" id="companyName" name="companyName" value="<%= listing.companyName %>" required>
-
-            <label for="ownerName">Owner Name:</label>
-            <input type="text" id="ownerName" name="ownerName" value="<%= listing.ownerName %>" required>
-
-            <label for="industryType">Industry Type:</label>
-            <input type="text" id="industryType" name="industryType" value="<%= listing.industryType %>" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<%= listing.email %>" required>
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" value="<%= listing.address %>" required>
-
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" value="<%= listing.location %>" required>
-
-            <label for="wasteTypesRequired">Waste Type Required:</label>
-            <input type="text" id="wasteTypesRequired" name="wasteTypesRequired" value="<%= listing.wasteTypesRequired %>" required>
-
-            <label for="minQuantityRequired">Minimum Quantity Required (kg):</label>
-            <input type="number" id="minQuantityRequired" name="minQuantityRequired" value="<%= listing.minQuantityRequired %>" required>
-
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" value="<%= listing.quantity %>" required>
-
-            <div class="button-group">
-                <button type="submit" class="save-btn">Save Changes</button>
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar bg-primary text-white py-2">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="logo mb-0">🌱 WasteToWealth</h2>
+                <nav class="nav-buttons">
+                    <a href="/companies" class="btn btn-light"><i class="fas fa-arrow-left"></i> Back to Listings</a>
+                </nav>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+    </header>
 
+    <!-- ================= FORM CARD ================= -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h1 class="text-center mb-4">Edit Company Listing</h1>
+
+                        <form action="/companies/<%= listing._id %>?_method=PUT" method="POST">
+
+                            <div class="mb-3">
+                                <label for="wastetypeRequired" class="form-label">Waste Type Required</label>
+                                <input type="text" class="form-control" id="wastetypeRequired" name="wastetypeRequired"
+                                    value="<%= listing.wastetypeRequired %>" required>
+                            </div>
+
+                            <label for="requiredQuantity" class="form-label">Required Quantity (kg)</label>
+                            <input type="number" class="form-control" id="requiredQuantity" name="requiredQuantity"
+                                value="<%= listing.requiredQuantity %>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="offeredPrice" class="form-label">Offered Price (per kg in ₹)</label>
+                        <input type="number" class="form-control" id="offeredPrice" name="offeredPrice"
+                            value="<%= listing.offeredPrice %>" placeholder="Optional">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location"
+                            value="<%= listing.location %>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contactEmail" class="form-label">Contact Email</label>
+                        <input type="email" class="form-control" id="contactEmail" name="contactEmail"
+                            value="<%= listing.contactEmail %>">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contactPhone" class="form-label">Contact Phone</label>
+                        <input type="text" class="form-control" id="contactPhone" name="contactPhone"
+                            value="<%= listing.contactPhone %>" minlength="10" maxlength="10">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description"
+                            rows="4"><%= listing.description %></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">Update Listing</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

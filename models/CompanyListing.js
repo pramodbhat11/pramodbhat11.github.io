@@ -18,6 +18,11 @@ const CompanyListingSchema = new Schema({
     required: true
   },
 
+  offeredPrice: {
+    type: Number,
+    required: false
+  },
+
   location: {
     type: String,
     required: true

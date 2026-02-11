@@ -1,0 +1,85 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-header bg-success text-white text-center py-4 rounded-top-4">
+                        <h2 class="mb-0"><i class="fas fa-robot me-2"></i> AI Crop Consultant</h2>
+                        <p class="mb-0 opacity-75">Ask anything about any crop!</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+
+                        <!-- Search Form -->
+                        <form action="/crop-info" method="POST" class="mb-4">
+                            <div class="input-group input-group-lg">
+                                <input type="text" name="cropName" class="form-control"
+                                    placeholder="Enter crop name (e.g. Tomato, Wheat, Cotton)..."
+                                    value="<%= cropName || '' %>" required>
+                                <button class="btn btn-dark" type="submit">
+                                    <i class="fas fa-search me-1"></i> Get Details
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Loading Indicator (Hidden by default, shown via JS on submit) -->
+                        <div id="loading" class="text-center d-none my-5">
+                            <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-3 text-muted">Analyzing agricultural data...</p>
+                        </div>
+
+                        <!-- Result Section -->
+                        <% if (result) { %>
+                            <div class="result-section animate__animated animate__fadeIn">
+                                <hr class="my-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h3 class="text-success mb-0">Report for: <%= cropName %>
+                                    </h3>
+                                </div>
+
+                                <div class="bg-light p-4 rounded-3 border">
+                                    <!-- Simple markdown rendering by replacing newlines with breaks and bolding headers -->
+                                    <div class="ai-content">
+                                        <%- result.replace(/\n/g, '<br>'
+                                            ).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>' ) %>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <a href="/crop-info" class="btn btn-outline-secondary">Ask Another</a>
+                                </div>
+                            </div>
+                            <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function () {
+            document.getElementById('loading').classList.remove('d-none');
+            if (document.querySelector('.result-section')) {
+                document.querySelector('.result-section').classList.add('d-none');
+            }
+        });
+    </script>
+
+    <style>
+        .ai-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+
+        .ai-content strong {
+            color: #198754;
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+    </style>

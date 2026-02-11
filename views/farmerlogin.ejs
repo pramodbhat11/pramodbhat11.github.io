@@ -1,25 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Farmer Login</title>
     <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
-
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Farmer Login</h2>
 
-        <form action="/farmer/login" method="POST">
-            <input type="text" name="email" placeholder="Enter Email" required>
-            <input type="password" name="password" placeholder="Enter Password" required>
+        <% if (error) { %>
+            <div class="alert alert-error">
+                <%= error %>
+            </div>
+            <% } %>
+                <% if (success) { %>
+                    <div class="alert alert-success">
+                        <%= success %>
+                    </div>
+                    <% } %>
 
-            <button type="submit">Login</button>
-        </form>
+                        <form action="/farmer/login" method="POST">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
 
-        <p>Don't have an account? <a href="/signup">Signup</a></p>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+
+                            <button type="submit" class="btn primary">Login</button>
+                        </form>
+
+                        <div style="text-align: center; margin: 15px 0;">
+                            <p>Or</p>
+                            <a href="/auth/google/farmer/login" style="text-decoration: none;">
+                                <img src="/images/google_signin.png" alt="Sign in with Google"
+                                    style="height: 40px; cursor: pointer;">
+                            </a>
+                        </div>
+
+                        <p>Don't have an account? <a href="/farmer/register">Register as Farmer</a></p>
+                        <p><a href="/login">Back to User Type Selection</a></p>
     </div>
-
 </body>
-</html> 
+
+</html>

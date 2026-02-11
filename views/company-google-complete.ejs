@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Complete Company Profile</h2>
+                    <div class="alert alert-info">
+                        Please provide the additional details to complete your registration.
+                    </div>
+
+                    <form action="/company/register/complete" method="POST">
+
+                        <div class="mb-3">
+                            <label for="companyName" class="form-label">Company Name (from Google)</label>
+                            <input type="text" class="form-control" value="<%= currentUser.companyName %>" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email (from Google)</label>
+                            <input type="email" class="form-control" value="<%= currentUser.email %>" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="industryType" class="form-label">Industry Type</label>
+                            <input type="text" class="form-control" id="industryType" name="industryType" required
+                                placeholder="E.g. Bio-fuel, Textile">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="contactNumber" class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" id="contactNumber" name="contactNumber" required
+                                placeholder="Enter contact number">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" required
+                                placeholder="Company Address"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Complete Registration</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,15 +1,48 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const CompanyLogin = require("../models/companylogin");
+const compauth = require("../middleware/companyauth");
+const FarmersListing = require("../models/FarmersListing");
+const checkCompanyRegistered = require("../middleware/checkCompanyRegistered");
 
 // -------------------- LOGIN / REGISTER -------------------- //
 
-// Show company login/registration form
-router.get("/login", (req, res) => {
-    res.render("companylogin.ejs");
+// Show login form
+router.get("/login", (req, res) => res.render("companylogin.ejs"));
+router.get("/login1", (req, res) => res.render("companylogin1.ejs"));
+
+// ---------------- LOGIN ---------------- //
+router.post("/login1", checkCompanyRegistered, async (req, res) => {
+    try {
+        const { password } = req.body;
+        const company = req.company;
+
+        const isMatch = await company.comparePassword(password);
+        if (!isMatch) {
+            req.flash("error", "Invalid email or password");
+            return res.redirect("/company/login1");
+        }
+
+        // Save session
+        req.session.user = {
+            id: company._id,
+            email: company.email,
+            name: company.companyName,
+            type: "company"
+        };
+
+        req.flash("success", "Company login successful!");
+        res.redirect("/");
+
+    } catch (err) {
+        console.error(err);
+        req.flash("error", "Login failed");
+        res.redirect("/company/login1");
+    }
 });
 
-// Handle signup/login for company
+// ---------------- REGISTER ---------------- //
 router.post("/login", async (req, res) => {
     try {
         const {
@@ -21,10 +54,8 @@ router.post("/login", async (req, res) => {
             password
         } = req.body;
 
-        // Check if company already exists
         let company = await CompanyLogin.findOne({ email });
 
-        // If NOT found → create new
         if (!company) {
             company = new CompanyLogin({
                 companyName,
@@ -42,46 +73,54 @@ router.post("/login", async (req, res) => {
                 gstNumber,
                 companyLicenseNumber
             });
-
             await company.save();
         }
 
-        // Save session
         req.session.user = {
+            id: company._id,
             type: "company",
-            email: company.email
+            email: company.email,
+            name: company.companyName
         };
 
-        req.flash("success", "Company Login Successful!");
+        req.flash("success", "Company registered/login successful!");
         res.redirect("/company/listings");
 
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.send("Error creating or logging in company");
     }
 });
 
-
-// -------------------- COMPANY LISTINGS -------------------- //
-
-// All company listings
-router.get("/listings", async (req, res) => {
+// ---------------- COMPANY LISTINGS ---------------- //
+router.get("/listings", compauth, async (req, res) => {
     try {
         const allistings = await CompanyLogin.find({});
         res.render("indexcompany.ejs", { allistings });
     } catch (err) {
+        console.error(err);
         res.send("Error fetching company listings");
     }
 });
 
-// SHOW PAGE — Always keep this AFTER /listings
+// Show single listing
 router.get("/:id", async (req, res) => {
-    const listing = await CompanyLogin.findById(req.params.id);
-    if (!listing) return res.send("Company listing not found");
-    res.render("showcompany.ejs", { listing });
+    try {
+        const listing = await CompanyLogin.findById(req.params.id);
+        if (!listing) return res.send("Company listing not found");
+
+        const matchingFarmers = await FarmersListing.find({
+            quantity: { $gte: listing.minQuantityRequired }
+        });
+
+        res.render("showcompany.ejs", { listing, matchingFarmers });
+    } catch (err) {
+        console.error(err);
+        res.send("Error loading company listing");
+    }
 });
 
-// EDIT PAGE
+// EDIT listing
 router.get("/:id/edit", async (req, res) => {
     const listing = await CompanyLogin.findById(req.params.id);
     if (!listing) return res.send("Company listing not found");
@@ -97,9 +136,21 @@ router.put("/listing/:id", async (req, res) => {
 
 // DELETE listing
 router.delete("/:id", async (req, res) => {
-    await CompanyLogin.findByIdAndDelete(req.params.id);
-    req.flash("success", "Company listing deleted");
-    res.redirect("/company/listings");
+    const listing = await CompanyLogin.findById(req.params.id);
+
+
+
+  
+    if (listing.email === req.session.user.email) {
+          await FarmersListing.findByIdAndDelete(req.params.id);
+    req.flash("success", "Listing deleted!");
+    return res.redirect(`/company/listings`);
+      
+    }
+    req.flash("success", "You are not authorized to delete this listing!");
+   return res.redirect(`/company/${req.params.id}`);
+
+  
 });
 
 module.exports = router;

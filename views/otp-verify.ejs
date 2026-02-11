@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Verify OTP</h2>
+                    <div class="alert alert-info text-center">
+                        OTP sent to <strong>
+                            <%= email %>
+                        </strong>
+                    </div>
+
+                    <form action="<%= typeof action !== 'undefined' ? action : '/login/otp/verify' %>" method="POST">
+                        <input type="hidden" name="email" value="<%= email %>">
+                        <input type="hidden" name="role" value="<%= role %>">
+
+                        <div class="mb-3">
+                            <label for="otp" class="form-label">Enter OTP</label>
+                            <input type="text" class="form-control text-center" id="otp" name="otp" required
+                                maxlength="6" style="letter-spacing: 5px; font-size: 1.5rem;" placeholder="123456">
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Verify & Login</button>
+
+                        <div class="text-center mt-3">
+                            <a href="/login/otp" class="text-decoration-none">Resend OTP / Change Email</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

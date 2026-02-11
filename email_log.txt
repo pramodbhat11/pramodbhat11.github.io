@@ -1,0 +1,41 @@
+Attempting to send to prathambhat000@gmail.com with OTP 585349
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a802daa46fsm7533505ad.21 - gsmtp
+Attempting to send to prathambhat000@gmail.com with OTP 929978
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-3533520597esm3837168a91.4 - gsmtp
+Attempting to send to 01fe23bcs296@kletech.ac.in with OTP 544189
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-8231871f97asm924104b3a.40 - gsmtp
+Attempting to send to pratham227@gmail.com with OTP 448590
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-8231871d51esm937719b3a.38 - gsmtp
+Attempting to send to pramodbhat396@gmail.com with OTP 921440
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a802dd09d0sm8279055ad.37 - gsmtp
+Attempting to send to pramodbhat396@gmail.com with OTP 682803
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a802fdd123sm8286315ad.96 - gsmtp
+Attempting to send to pramodbhat396@gmail.com with OTP 604227
+Error sending: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a802ede6fesm8327675ad.45 - gsmtp
+Attempting to send to pramodbhat396@gmail.com with OTP 288669
+Success sending to pramodbhat396@gmail.com
+Attempting to send to pramodbhat396@gmail.com with OTP 608084
+Success sending to pramodbhat396@gmail.com
+Attempting to send to pramod881@gmail.com with OTP 356965
+Success sending to pramod881@gmail.com
+Attempting to send to pramodbhat881@gmail.com with OTP 743217
+Success sending to pramodbhat881@gmail.com
+Attempting to send to prathambhat000@gmail.com with OTP 648865
+Success sending to prathambhat000@gmail.com
+Attempting to send to 01fe23bcs296@kletech.ac.in with OTP 631641
+Success sending to 01fe23bcs296@kletech.ac.in
+Attempting to send to wastetowealthfaarm@gmail.com with OTP 128301
+Success sending to wastetowealthfaarm@gmail.com
+Attempting to send to wastetowealthfarm@gmail.com with OTP 759818
+Success sending to wastetowealthfarm@gmail.com
+Attempting to send to prathambhat000@gmail.com with OTP 258425
+Success sending to prathambhat000@gmail.com
+Attempting to send to 01fe23bcs296@kletech.ac.in with OTP 184954
+Success sending to 01fe23bcs296@kletech.ac.in

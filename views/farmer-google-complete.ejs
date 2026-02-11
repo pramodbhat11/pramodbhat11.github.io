@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Complete Your Profile</h2>
+                    <div class="alert alert-info">
+                        Please provide the additional details to complete your registration.
+                    </div>
+
+                    <form action="/farmer/register/complete" method="POST">
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name (from Google)</label>
+                            <input type="text" class="form-control" value="<%= currentUser.name %>" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email (from Google)</label>
+                            <input type="email" class="form-control" value="<%= currentUser.email %>" disabled>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="village" class="form-label">Village</label>
+                            <input type="text" class="form-control" id="village" name="village" required
+                                placeholder="Enter your village">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mobileNumber" class="form-label">Mobile Number</label>
+                            <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" maxlength="10"
+                                minlength="10" required placeholder="Enter your mobile number">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Complete Registration</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
